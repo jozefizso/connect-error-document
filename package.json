@@ -4,7 +4,7 @@
     "description": "Error document handler middleware for Connect server.",
     "main": "index.js",
     "scripts": {
-        "test": "node_modules/.bin/grunt ci"
+        "test": "grunt ci"
     },
     "repository": {
         "type": "git",
