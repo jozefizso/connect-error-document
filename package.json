@@ -1,0 +1,41 @@
+{
+    "name": "connect-error-document",
+    "version": "0.0.1",
+    "description": "Error document handler middleware for Connect server.",
+    "main": "index.js",
+    "scripts": {
+        "test": "node_modules/.bin/grunt ci"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jozefizso/connect-error-document"
+    },
+    "keywords": [
+        "connect",
+        "express",
+        "middleware",
+        "error",
+        "handle",
+        "ErrorDocument",
+        "error-handler"
+    ],
+    "author": "Jozef Izso <jozef.izso@gmail.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/jozefizso/connect-error-document/issues"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "grunt": "~0.4.1",
+        "grunt-contrib-jshint": "~0.8.0",
+        "grunt-contrib-watch": "~0.5.3",
+        "grunt-mocha-cli": "~1.1.0",
+        "grunt-complexity": "~0.1.3",
+        "load-grunt-tasks": "~0.3.0",
+        "jshint-stylish": "~0.1.5",
+        "chai": "~1.9.0"
+    },
+    "engines": {
+        "node": ">=0.8.0"
+    }
+}
