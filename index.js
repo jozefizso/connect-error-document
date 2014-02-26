@@ -1,6 +1,10 @@
 'use strict';
 
-var fs = require('fs');
+var fs        = require('fs'),
+    parse     = require('url').parse,
+    path      = require('path'),
+    normalize = path.normalize,
+    join      = path.join;
 
 module.exports = function errorDocument(options) {
     options = options || {};
@@ -13,20 +17,42 @@ module.exports = function errorDocument(options) {
         options.root = 'public';
     }
 
-    return function errorDocument(err, req, res, next) {
-        if (err.status) {
-            res.statusCode = err.status;
+    return function errorDocument(req, res, next) {
+        var handleError = function (statusCode, next) {
+            var filename = join(options.root, statusCode + '.html');
+
+            fs.readFile(filename, 'utf8', function (err, html) {
+                if (err) {
+                    return ('ENOENT' === err.code) ? next() : next(err);
+                }
+
+                res.statusCode = statusCode;
+                res.setHeader('Content-Type', 'text/html; charset=utf-8');
+                res.end(html);
+            });
+        };
+
+        var url = parse(req.url),
+            dir = decodeURIComponent(url.pathname),
+            path = normalize(join(options.root, dir));
+
+        // null byte(s), bad request
+        if (path.indexOf('\0') >= 0) {
+            return handleError(404, next);
         }
 
-        var path = options.root + '/' + res.statusCode + '.html';
+        // malicious path, forbidden
+        if (0 !== path.indexOf(options.root)) {
+            return handleError(403, next);
+        }
 
-        fs.readFile(path, 'utf8', function (err, str) {
+        // check if we have a directory
+        fs.stat(path, function (err, stat) {
             if (err) {
-                return next(err);
+                return handleError('ENOENT' === err.code ? 404 : 500);
             }
 
-            res.setHeader('Content-Type', 'text/html; charset=utf-8');
-            res.end(str);
+            next();
         });
     };
 };

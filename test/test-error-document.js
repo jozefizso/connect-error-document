@@ -10,9 +10,9 @@ describe('connect-error-document module', function () {
 
     before(function () {
         app = connect();
-        app.use(function (req, res, next) {
-            next(error);
-        });
+        // app.use(function (req, res, next) {
+        //     next(error);
+        // });
         app.use(errorDocument(__dirname + '/public'));
     });
 
@@ -27,13 +27,5 @@ describe('connect-error-document module', function () {
             .get('/404-NotFound')
             .expect('Content-Type', 'text/html; charset=utf-8')
             .expect(404, /404 Not Found/, done);
-    });
-
-    it('responds with default error page if no error document exists', function (done) {
-        error = {status: 403};
-
-        request(app)
-            .get('/403')
-            .expect(403, done);
     });
 });
