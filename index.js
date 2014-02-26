@@ -49,7 +49,7 @@ module.exports = function errorDocument(options) {
         // check if we have a directory
         fs.stat(path, function (err, stat) {
             if (err) {
-                return handleError('ENOENT' === err.code ? 404 : 500);
+                return handleError('ENOENT' === err.code ? 404 : 500, next);
             }
 
             next();
