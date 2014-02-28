@@ -1,6 +1,6 @@
 {
     "name": "connect-error-document",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "description": "Error document handler middleware for Connect server.",
     "main": "index.js",
     "scripts": {
